@@ -1,71 +1,56 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { loginValidationSchema } from '../validationSchemas/login';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
 
   const navigation = useNavigation();
 
-  const db = SQLite.openDatabase({
-    name: 'incidents.db'
-});
-
   const handleLogin = () => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * FROM users WHERE email = ? AND password = ?',
-        [email, password],
-        (_, result) => {
-          const { rows } = result;
-          if (rows && rows.length > 0) {
-            console.log('Inicio de sesión exitoso');
-            navigation.navigate('Students');
-          } else {
-            console.log('Credenciales incorrectas');
-            Alert.alert('Error', 'Credenciales incorrectas');
-          }
-        },
-        (_, error) => {
-          console.error('Error en la consulta:', error);
-          Alert.alert('Error', 'Hubo un problema al iniciar sesión');
-        }
-      );
-    });
-  
-    
+    // Here, insert validation logic before navigating
+    // loginValidationSchema.validate({ email, password }).then(() => {
+    navigation.navigate('Students');
+    // }).catch((error) => {
+    //   Alert.alert("Invalid Login", "The email or password you entered is incorrect.");
+    // });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Correo Electrónico"
-        value={email}
-        onChangeText={text => {
-          setEmail(text);
-        }}
-      />
-      <Text style={styles.errorText}>{errors.email}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        secureTextEntry
-        value={password}
-        onChangeText={text => {
-          setPassword(text);
-        }}
-      />
-      <Text style={styles.errorText}>{errors.password}</Text>
-      <Button title="Iniciar Sesión" onPress={handleLogin} />
+      {/* Logo Placeholder */}
+      <View style={styles.logoWrapper}>
+        {/* Replace with your actual logo */}
+        <Image
+          source={{ uri: 'https://your-logo-url.png' }}
+          style={styles.logo}
+        />
+      </View>
+
+      {/* Inputs */}
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          placeholderTextColor="#8e8e8e"
+          onChangeText={setUsername}
+          value={username}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#8e8e8e"
+          secureTextEntry
+          onChangeText={setPassword}
+          value={password}
+        />
+      </View>
+
+      {/* Login Button */}
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -73,27 +58,44 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e6f7ff', // A light blue background color
+  },
+  logoWrapper: {
+    marginBottom: 40,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50, // Makes it round
+    backgroundColor: '#3399ff', // Blue background for the logo
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+  inputWrapper: {
+    width: '80%',
   },
   input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    backgroundColor: '#fff', // White background for the input
+    marginBottom: 20,
+    paddingHorizontal: 15,
+    borderRadius: 25, // Rounded corners for the input
     borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderColor: '#b3d9ff', // Light blue border
   },
-  errorText: {
-    color: 'red',
-    marginBottom: 10,
+  button: {
+    backgroundColor: '#0073e6', // A darker blue for the button
+    paddingVertical: 15,
+    paddingHorizontal: 35,
+    borderRadius: 25, // Rounded corners for the button
+  },
+  buttonText: {
+    color: '#fff', // White text for the button
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
