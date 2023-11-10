@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rate-repository-app1",
-    "slug": "rate-repository-app1",
+    "name": "inicidents-app",
+    "slug": "inicidents-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
