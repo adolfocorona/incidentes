@@ -13,7 +13,7 @@ const LoginScreen = () => {
     // loginValidationSchema.validate({ email, password }).then(() => {
     navigation.navigate('Students');
     // }).catch((error) => {
-    //   Alert.alert("Invalid Login", "The email or password you entered is incorrect.");
+    // dkasdasd  Alert.alert("Invalid Login", "The email or password you entered is incorrect.");
     // });
   };
 
