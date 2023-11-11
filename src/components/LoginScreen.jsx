@@ -12,7 +12,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    navigation.navigate('Students');
+    pr.navigate('Students');
   };
 
   const handleRegistration = () => {
