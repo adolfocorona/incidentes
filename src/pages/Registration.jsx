@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image, Platform, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-picker';
-import { RNCamera } from 'react-native-camera';
 
 const Registration = () => {
   const [CURP, setCURP] = useState('');
@@ -17,36 +16,28 @@ const Registration = () => {
     // You can use the entered data, including CURP, phoneNumber, password, and documentImage
     // to register the user. You can send this data to your server or use any authentication mechanism.
     // Don't forget to add validation and error handling.
-
-    // After successful registration, navigate to another screen (e.g., Home screen).
-    navigation.navigate('LoginScreen');
+    navigation.navigate('Login');
   };
 
-  const handleDocumentImageCapture = async () => {
-    try {
-      const options = {
-        title: 'Capture Document',
-        mediaType: 'photo',
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
-        },
-      };
+  const handleSelectImage = () => {
+    const options = {
+      title: 'Seleccionar imagen o tomar foto',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
 
-      ImagePicker.showImagePicker(options, (response) => {
-        if (response.didCancel) {
-          console.log('Image picker was canceled');
-        } else if (response.error) {
-          console.error('Image picker error:', response.error);
-        } else {
-          // Set the selected document image
-          setDocumentImage(response.uri);
-        }
-      });
-    } catch (error) {
-      console.error('Error capturing document image:', error);
-      Alert.alert('Error', 'Failed to capture document image. Please try again.');
-    }
+    ImagePicker.launchImageLibrary (options, (response) => {
+      if (response.didCancel) {
+        console.log('Usuario canceló la selección de imagen');
+      } else if (response.error) {
+        console.log('Error:', response.error);
+      } else {
+        // La imagen seleccionada o capturada se guarda en el estado
+        setDocumentImage(response.uri);
+      }
+    });
   };
 
   return (
@@ -80,22 +71,17 @@ const Registration = () => {
         secureTextEntry
       />
 
-      {/* Document Image Capture */}
-      <TouchableOpacity
-        style={styles.captureButton}
-        onPress={handleDocumentImageCapture}
-      >
-        <Text style={styles.captureButtonText}>Capture Document</Text>
+      <TouchableOpacity style={styles.captureButton} onPress={handleSelectImage}>
+        <Text style={styles.captureButtonText}>Seleccionar imagen o tomar foto</Text>
       </TouchableOpacity>
 
-      {/* Display Document Image */}
       {documentImage && (
         <Image source={{ uri: documentImage }} style={styles.documentImage} />
       )}
 
       {/* Registration Button */}
-      <TouchableOpacity style={styles.button} onPress={handleRegistration}>
-        <Text style={styles.buttonText}>Register</Text>
+      <TouchableOpacity style={styles.registrationButton} onPress={handleRegistration}>
+        <Text style={styles.buttonText}>Registrar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -135,11 +121,12 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 20,
   },
-  button: {
-    backgroundColor: '#0073e6',
+  registrationButton: {
+    marginTop: 10, // Add some space between the login and registration buttons
+    backgroundColor: '#33cc33', // A green color for the registration button
     paddingVertical: 15,
     paddingHorizontal: 35,
-    borderRadius: 25,
+    borderRadius: 25, // Rounded corners for the button
   },
   buttonText: {
     color: '#fff',

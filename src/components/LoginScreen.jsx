@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import necessary navigation functions
+import { useNavigation } from '@react-navigation/native'; 
+import logoImage from '../../assets/logo.png';
+import logoNodImage from '../../assets/node.png'; // Make sure the path is correct
 
 const LoginScreen = () => {
   const [CURP, setCURP] = useState('');
@@ -73,24 +75,29 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#e6f7ff', // A light blue background color
+    backgroundColor: '#fff', // A light blue background color
+  },
+  logoWrapper: {
+    marginBottom: 40,
+    alignItems: 'center',
   },
   logoWrapper: {
     marginBottom: 40,
     alignItems: 'center',
   },
   logo: {
-    width: 200,
-    height: 200,
-    borderRadius: 100, // Makes it round
-    backgroundColor: '#3399ff', // Blue background for the logo
+    width: 700,
+    height: 120,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logoText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 10, // Add some space between the logo and text
+  logoNod: {
+    width: 150,
+    height: 120,
+    borderRadius: 70, // Makes it round
+    backgroundColor: '#FFFFFF', // Blue background for the logo
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputWrapper: {
     width: '80%',
@@ -102,7 +109,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 25, // Rounded corners for the input
     borderWidth: 1,
-    borderColor: '#b3d9ff', // Light blue border
+    borderColor: '#0833a2', // Light blue border
   },
   button: {
     backgroundColor: '#0073e6', // A darker blue for the button
