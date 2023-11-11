@@ -1,39 +1,57 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const Students = ({ navigation }) => {
+const Students = () => {
+  const navigation = useNavigation();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../images/municipioqueretaro.png')}
-        style={styles.image}
-      />
-      <Text style={styles.title}>Bienvenido a la página para estudiantes</Text>
+      {/* This TouchableOpacity is now positioned in the top left corner */}
+      <TouchableOpacity onPress={toggleMenu} style={styles.menuTrigger}>
+        <Text style={styles.menuTriggerText}>☰Menú</Text>
+      </TouchableOpacity>
 
-      {/* Botón de Denuncias */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Denuncias')}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isMenuVisible}
+        onRequestClose={() => {
+          setIsMenuVisible(false);
+        }}
       >
-        <FontAwesome name="exclamation-triangle" size={30} color="white" />
-        <Text style={styles.buttonText}>Denuncias</Text>
-      </TouchableOpacity>
+        <View style={styles.sidebar}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Denuncias')}
+          >
+            <FontAwesome name="exclamation-triangle" size={30} color="white" />
+            <Text style={styles.buttonText}>Denuncias</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity 
-       style={styles.button}
-        onPress={() => navigation.navigate('Reporte')}>
-        <FontAwesome name="bar-chart" size={30} color="white" />
-        <Text style={styles.buttonText}>Reporte</Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Reporte')}
+          >
+            <FontAwesome name="bar-chart" size={30} color="white" />
+            <Text style={styles.buttonText}>Reporte</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => alert('Implementa la lógica de cierre de sesión')}
-      >
-        <FontAwesome name="sign-out" size={30} color="white" />
-        <Text style={styles.buttonText}>Cerrar Sesión</Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <FontAwesome name="sign-out" size={30} color="white" />
+            <Text style={styles.buttonText}>Cerrar Sesión</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -41,33 +59,25 @@ const Students = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
   },
-  title: {
+  menuTrigger: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    padding: 10,
+  },
+  menuTriggerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
   },
-  image: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    marginBottom: 20,
+  sidebar: {
+    flex: 1,
+    backgroundColor: 'white',
   },
   button: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#0073e6',
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  reportButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#34A853',
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
