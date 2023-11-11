@@ -16,7 +16,7 @@ const LoginScreen = () => {
     navigation.navigate('Students');
     // }).catch((error) => {
     //   Alert.alert("Invalid Login", "The email or password you entered is incorrect.");
-    // });
+    // })Modicfi;
   };
 
   return (
