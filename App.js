@@ -4,7 +4,8 @@ import LoginScreen from './incidentes/src/components/LoginScreen';
 import Students from './incidentes/src/pages/Students';
 import DenunciaDetailScreen from './incidentes/src/pages/DenunciaDetailScreen';
 import DenunciasScreen from './incidentes/src/pages/DenunciasScreen';
-
+import ReporteScreen from './incidentes/src/pages/ReporteScreen';
+import ReporteDetail from './incidentes/src/pages/ReporteDetail';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -15,6 +16,8 @@ const App = () => {
         <Stack.Screen name="Students" component={Students} />
          <Stack.Screen name="Denuncias" component={DenunciasScreen} />
         <Stack.Screen name="DenunciaDetail" component={DenunciaDetailScreen} />
+      <Stack.Screen name="Reporte" component={ReporteScreen} /> 
+     <Stack.Screen name="ReporteDetail" component={ReporteDetail} />  
       </Stack.Navigator>
     </NavigationContainer>
   );
