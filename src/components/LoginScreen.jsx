@@ -17,6 +17,7 @@ const LoginScreen = () => {
     // }).catch((error) => {
     //   Alert.alert("Invalid Login", "The email or password you entered is incorrect.");
     // });
+    //Sigo programando
   };
 
   return (
